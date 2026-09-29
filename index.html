@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Feliz Aniversario Mi Amor 🗝️ La Puerta Secreta</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Estilo gótico fantástico (Coraline) + caligrafía romántica + texto limpio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Henny+Penny&family=Patrick+Hand&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="coraline-theme">
+  <!-- Fondo animado del Túnel y Estrellas (Canvas 2D) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Decoración sutil: luciérnagas y destellos mágicos -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-magenta"></div>
+
+  <!-- Botón flotante de audio ambiental / Caja de música de Coraline -->
+  <div class="sound-control-bar">
+    <button id="btn-toggle-music" class="music-toggle-btn" title="Activar / Pausar Música de Fondo">
+      <span class="music-icon">🎵</span>
+      <span class="music-bars">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+      </span>
+      <span id="music-text" class="music-text">Música: OFF</span>
+    </button>
+  </div>
+
+  <main class="app-container">
+    
+    <!-- ========================================================== -->
+    <!-- PANTALLA 1: BIENVENIDA / INTERCEPCIÓN                      -->
+    <!-- ========================================================== -->
+    <section id="welcome-screen" class="screen active">
+      <div class="portal-frame-wrapper">
+        <div class="portal-card">
+          <!-- Decoración: Ojo de botón y llave mágica -->
+          <div class="button-badge-header">
+            <div class="coraline-button-icon">
+              <span class="hole hole-1"></span>
+              <span class="hole hole-2"></span>
+              <span class="hole hole-3"></span>
+              <span class="hole hole-4"></span>
+              <span class="thread-cross"></span>
+            </div>
+            <span class="key-icon-small">🗝️</span>
+          </div>
+
+          <span id="welcome-badge" class="secret-tag">🗝️ Una puerta secreta hacia mi corazón</span>
+          <h1 id="welcome-title" class="coraline-main-title">FELIZ ANIVERSARIO MI AMOR</h1>
+          <p id="welcome-question" class="coraline-subtitle">¿Quieres abrir la puerta y descubrir tu sorpresa secreta?</p>
+
+          <!-- Zona interactiva de botones -->
+          <div class="decision-arena" id="decision-arena">
+            <button id="btn-yes" class="btn-portal btn-glow">
+              <span class="btn-text" id="btn-yes-text">¡Sí, por favor! ✨</span>
+              <div class="btn-shine"></div>
+            </button>
+
+            <button id="btn-no" class="btn-portal btn-evasive">
+              <span class="btn-text" id="btn-no-text">No gracias 🚪</span>
+            </button>
+          </div>
+
+          <!-- Mensaje juguetón cuando el botón evasivo se mueve -->
+          <div id="evasive-message" class="evasive-balloon" aria-live="polite"></div>
+
+          <!-- Pie de tarjeta con puntadas de costura -->
+          <div class="stitched-border-bottom"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- PANTALLA 2: DASHBOARD PRINCIPAL (LAS 4 PUERTAS SECRETAS)   -->
+    <!-- ========================================================== -->
+    <section id="dashboard-screen" class="screen hidden">
+      <header class="dashboard-header">
+        <div class="progress-pill">
+          <span class="pill-icon">🗝️</span>
+          <span id="progress-text">0 de 4 secretos revelados</span>
+          <div class="progress-track">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+        </div>
+        <h2 id="dash-title" class="dashboard-title">¡Sorpresa Mi Amor! 🗝️</h2>
+        <p id="dash-subtitle" class="dashboard-desc">Cada puerta secreta guarda un pedacito de lo mucho que te amo. Haz clic en cada una para descubrirlas.</p>
+      </header>
+
+      <!-- Grid de las 4 Tarjetas Temáticas -->
+      <div class="doors-grid">
+        
+        <!-- Tarjeta 1: Nuestra Playlist -->
+        <article class="secret-door-card" data-door="playlist">
+          <div class="door-stitch-border"></div>
+          <div class="card-glow"></div>
+          <div class="door-icon-box">
+            <div class="mini-vinyl-badge">
+              <div class="mini-vinyl-center"></div>
+            </div>
+          </div>
+          <span class="door-number">Puerta I</span>
+          <h3 class="door-title" id="card1-title">Nuestra Playlist</h3>
+          <p class="door-description" id="card1-desc">Canciones que hacen latir mi corazón cada vez que te pienso.</p>
+          <div class="door-action">
+            <span class="action-text">Abrir puerta</span>
+            <span class="action-arrow">→</span>
+          </div>
+          <div class="unlocked-badge" id="badge-playlist">🗝️</div>
+        </article>
+
+        <!-- Tarjeta 2: Todo esto es para ti -->
+        <article class="secret-door-card" data-door="compliments">
+          <div class="door-stitch-border"></div>
+          <div class="card-glow"></div>
+          <div class="door-icon-box">
+            <div class="seeing-stone-icon">
+              <span class="stone-hole"></span>
+            </div>
+          </div>
+          <span class="door-number">Puerta II</span>
+          <h3 class="door-title" id="card2-title">Todo esto es para ti</h3>
+          <p class="door-description" id="card2-desc">Pequeñas chispas y razones mágicas por las que me encantas.</p>
+          <div class="door-action">
+            <span class="action-text">Abrir puerta</span>
+            <span class="action-arrow">→</span>
+          </div>
+          <div class="unlocked-badge" id="badge-compliments">🗝️</div>
+        </article>
+
+        <!-- Tarjeta 3: Mis fotos favoritas -->
+        <article class="secret-door-card" data-door="photos">
+          <div class="door-stitch-border"></div>
+          <div class="card-glow"></div>
+          <div class="door-icon-box">
+            <div class="mini-polaroid-icon">
+              <div class="polaroid-lens"></div>
+            </div>
+          </div>
+          <span class="door-number">Puerta III</span>
+          <h3 class="door-title" id="card3-title">Mis fotos favoritas</h3>
+          <p class="door-description" id="card3-desc">Nuestros instantes mágicos congelados en el tiempo.</p>
+          <div class="door-action">
+            <span class="action-text">Abrir puerta</span>
+            <span class="action-arrow">→</span>
+          </div>
+          <div class="unlocked-badge" id="badge-photos">🗝️</div>
+        </article>
+
+        <!-- Tarjeta 4: Te dedico esto -->
+        <article class="secret-door-card" data-door="letter">
+          <div class="door-stitch-border"></div>
+          <div class="card-glow"></div>
+          <div class="door-icon-box">
+            <div class="mini-envelope-icon">
+              <div class="wax-seal-button"></div>
+            </div>
+          </div>
+          <span class="door-number">Puerta IV</span>
+          <h3 class="door-title" id="card4-title">Te dedico esto</h3>
+          <p class="door-description" id="card4-desc">Palabras sinceras nacidas desde lo más profundo de mi alma.</p>
+          <div class="door-action">
+            <span class="action-text">Abrir puerta</span>
+            <span class="action-arrow">→</span>
+          </div>
+          <div class="unlocked-badge" id="badge-letter">🗝️</div>
+        </article>
+
+      </div>
+
+      <!-- Marca de agua romántica con el gato negro -->
+      <footer class="dashboard-footer">
+        <div class="black-cat-badge">
+          <span>🐈‍⬛</span>
+          <p>Hecho con todo mi amor para mi persona favorita</p>
+        </div>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ========================================================== -->
+  <!-- MODALES DE CONTENIDO (LAS 4 EXPERIENCIAS)                   -->
+  <!-- ========================================================== -->
+  
+  <!-- Modal 1: NUESTRA PLAYLIST -->
+  <div id="modal-playlist" class="coraline-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-window modal-wide">
+      <button class="modal-close" data-close="playlist" title="Cerrar puerta">✕</button>
+      
+      <div class="modal-header-stitch">
+        <span class="modal-kicker">🗝️ Puerta Secreta I</span>
+        <h2 id="modal-playlist-title" class="modal-title">Nuestra BSO Romántica 🎶</h2>
+      </div>
+
+      <!-- Pestañas de cambio: Spotify vs Tocadiscos Mágico -->
+      <div class="playlist-tabs-nav">
+        <button id="tab-spotify" class="playlist-tab-btn active" title="Ver reproductor de Spotify">
+          <span class="tab-icon">💚</span>
+          <span class="tab-label">Spotify Integrado</span>
+        </button>
+        <button id="tab-turntable" class="playlist-tab-btn" title="Ver tocadiscos de vinilo de Coraline">
+          <span class="tab-icon">💿</span>
+          <span class="tab-label">Tocadiscos Mágico</span>
+        </button>
+      </div>
+
+      <!-- VISTA 1: SPOTIFY EMBED DEDICADO -->
+      <div id="view-spotify" class="playlist-view active">
+        <div class="spotify-layout">
+          <div class="spotify-embed-wrapper">
+            <div class="spotify-frame-header">
+              <span class="spotify-dot dot-green"></span>
+              <span class="spotify-dot dot-cyan"></span>
+              <span class="spotify-dot dot-pink"></span>
+              <span class="spotify-header-title">Reproductor Directo Spotify 🎶</span>
+            </div>
+            <!-- Iframe inyectado dinámicamente -->
+            <div id="spotify-player-mount" class="spotify-mount-box"></div>
+          </div>
+
+          <div class="spotify-side-panel">
+            <div class="parchment-note">
+              <div class="pin-tape"></div>
+              <h4 class="note-title">Nuestra dedicatoria:</h4>
+              <p id="spotify-personal-note" class="note-content">
+                Cada melodía de esta lista tiene tu nombre grabado. Cuando escucho estas canciones no puedo evitar sonreír, recordar tus abrazos y lo increíble que es tenerte en mi vida.
+              </p>
+            </div>
+            <div class="spotify-hint-card">
+              <span class="hint-icon">🗝️</span>
+              <p>Puedes escuchar las canciones directamente aquí sin salir de la página.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA 2: TOCADISCOS DE VINILO DE CORALINE -->
+      <div id="view-turntable" class="playlist-view hidden">
+        <div class="playlist-experience">
+          <!-- Lado izquierdo: Tocadiscos de vinilo interactivo -->
+          <div class="turntable-panel">
+            <div class="vinyl-record-wrap">
+              <div id="vinyl-disc" class="vinyl-disc">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-center-button">
+                  <span class="button-hole"></span>
+                  <span class="button-hole"></span>
+                  <span class="button-hole"></span>
+                  <span class="button-hole"></span>
+                </div>
+              </div>
+              <div class="tonearm" id="tonearm"></div>
+            </div>
+
+            <div class="player-info">
+              <h4 id="current-song-title" class="current-title">Dreaming (Coraline Lullaby)</h4>
+              <p id="current-song-artist" class="current-artist">Bruno Coulais</p>
+              <div class="song-dedication-pill" id="current-song-dedication">
+                "Porque contigo entrar a cualquier mundo es mágico y perfecto."
+              </div>
+            </div>
+
+            <!-- Controles del reproductor -->
+            <div class="player-controls">
+              <button id="btn-prev-song" class="player-btn" title="Canción anterior">⏮</button>
+              <button id="btn-play-song" class="player-btn play-main" title="Reproducir / Pausar">
+                <span id="play-icon">▶</span>
+              </button>
+              <button id="btn-next-song" class="player-btn" title="Siguiente canción">⏭</button>
+            </div>
+          </div>
+
+          <!-- Lado derecho: Lista de canciones y nota romántica -->
+          <div class="playlist-side-panel">
+            <div class="parchment-note">
+              <div class="pin-tape"></div>
+              <h4 class="note-title">Una nota para ti:</h4>
+              <p id="playlist-personal-note" class="note-content">
+                Cada melodía de esta lista tiene tu nombre grabado. Eres mi canción favorita en bucle eterno.
+              </p>
+            </div>
+
+            <!-- Lista de canciones interactivas -->
+            <div class="tracklist-container">
+              <h4 class="tracklist-heading">Canciones de nuestra historia:</h4>
+              <ul id="tracklist" class="tracklist"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: TODO ESTO ES PARA TI (Burbujas mágicas de cumplidos) -->
+  <div id="modal-compliments" class="coraline-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-window">
+      <button class="modal-close" data-close="compliments" title="Cerrar puerta">✕</button>
+
+      <div class="modal-header-stitch">
+        <span class="modal-kicker">🗝️ Puerta Secreta II</span>
+        <h2 id="modal-compliments-title" class="modal-title">Tú Eres Mi Todo 🔮</h2>
+      </div>
+
+      <p id="compliments-instruction" class="modal-instruction">
+        Haz clic en cada esfera mágica para liberar un cumplido o pensamiento de amor:
+      </p>
+
+      <!-- Mensaje destacado de amor al hacer clic en una burbuja -->
+      <div class="compliment-spotlight" id="compliment-spotlight">
+        <div class="spotlight-quote">
+          <span class="quote-mark">“</span>
+          <p id="spotlight-text">Haz clic en cualquier esfera para comenzar...</p>
+          <span class="quote-mark">”</span>
+        </div>
+      </div>
+
+      <!-- Contenedor dinámico de burbujas flotantes -->
+      <div id="bubbles-arena" class="bubbles-arena"></div>
+
+      <!-- Barra de acciones -->
+      <div class="compliments-actions">
+        <button id="btn-spawn-bubbles" class="btn-portal btn-glow">
+          <span>✨ Lanzar más cariño</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: MIS FOTOS FAVORITAS (Polaroids) -->
+  <div id="modal-photos" class="coraline-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-window modal-wide">
+      <button class="modal-close" data-close="photos" title="Cerrar puerta">✕</button>
+
+      <div class="modal-header-stitch">
+        <span class="modal-kicker">🗝️ Puerta Secreta III</span>
+        <h2 id="modal-photos-title" class="modal-title">Nuestros Recuerdos Favoritos 📸</h2>
+      </div>
+
+      <p id="photos-instruction" class="modal-instruction">
+        Haz clic en cada fotografía para verla más de cerca y leer su dedicatoria:
+      </p>
+
+      <!-- Muro de Polaroids estilo Coraline -->
+      <div id="polaroids-wall" class="polaroids-wall"></div>
+    </div>
+  </div>
+
+  <!-- Lightbox visor para fotos individuales ampliadas -->
+  <div id="photo-lightbox" class="lightbox-overlay hidden">
+    <div class="lightbox-content">
+      <button id="btn-close-lightbox" class="lightbox-close">✕</button>
+      <div class="lightbox-polaroid">
+        <div class="polaroid-pin">📌</div>
+        <img id="lightbox-img" src="" alt="Foto especial">
+        <div class="lightbox-caption">
+          <h3 id="lightbox-title">Título</h3>
+          <span id="lightbox-date" class="lightbox-date">Fecha</span>
+          <p id="lightbox-desc">Dedicatoria amorosa...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: TE DEDICO ESTO (Carta Romántica) -->
+  <div id="modal-letter" class="coraline-modal" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-window modal-letter-window">
+      <button class="modal-close" data-close="letter" title="Cerrar puerta">✕</button>
+
+      <!-- Sobre sellado con botón de Coraline -->
+      <div id="envelope-sealed" class="envelope-sealed">
+        <div class="envelope-flap"></div>
+        <div class="envelope-pocket"></div>
+        <div class="wax-seal" id="wax-seal">
+          <div class="seal-button">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <span class="seal-text">Haz clic para abrir 🗝️</span>
+        </div>
+      </div>
+
+      <!-- Papel de pergamino romántico con costuras (se despliega al abrir) -->
+      <article id="letter-unfolded" class="parchment-letter hidden">
+        <div class="letter-stitch-left"></div>
+        <div class="letter-stitch-right"></div>
+        
+        <div class="letter-header">
+          <span id="letter-date" class="letter-date">18 de Septiembre</span>
+          <h3 id="letter-salutation" class="letter-salutation">Mi niña hermosa y mi amor eterno:</h3>
+        </div>
+
+        <div id="letter-body" class="letter-body">
+          <!-- Párrafos inyectados desde config.js -->
+        </div>
+
+        <div class="letter-footer">
+          <p id="letter-closing" class="letter-closing">Con todo mi amor y mi devoción para siempre,</p>
+          <p id="letter-signature" class="letter-signature">Tu novio que te adora con todo el corazón 🗝️❤️</p>
+          <div id="letter-postscript" class="letter-ps">
+            P.D.: Tú eres y siempre serás mi otra mitad favorita en cualquier mundo.
+          </div>
+        </div>
+
+        <div class="letter-stamp">
+          <div class="button-stamp"></div>
+          <span>Hecho con amor</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Scripts en módulos ES6 -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

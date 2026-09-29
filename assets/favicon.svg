@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="keyGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe066" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#b45309" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#854d0e" />
+    </linearGradient>
+  </defs>
+  <!-- Halo glow -->
+  <circle cx="32" cy="18" r="16" fill="url(#keyGlow)" />
+  <!-- Button key head -->
+  <circle cx="32" cy="18" r="13" fill="url(#goldGrad)" stroke="#451a03" stroke-width="2" />
+  <circle cx="32" cy="18" r="10" fill="none" stroke="#78350f" stroke-width="1.2" stroke-dasharray="2,2" />
+  <!-- 4 Button holes -->
+  <circle cx="28.5" cy="15" r="1.8" fill="#1e1b2e" />
+  <circle cx="35.5" cy="15" r="1.8" fill="#1e1b2e" />
+  <circle cx="28.5" cy="21" r="1.8" fill="#1e1b2e" />
+  <circle cx="35.5" cy="21" r="1.8" fill="#1e1b2e" />
+  <!-- Thread cross -->
+  <path d="M28.5 15 L35.5 21 M35.5 15 L28.5 21" stroke="#ec4899" stroke-width="1" stroke-linecap="round" />
+  <!-- Key stem -->
+  <path d="M30 30 L34 30 L33.5 56 L30.5 56 Z" fill="url(#goldGrad)" stroke="#451a03" stroke-width="1.5" />
+  <!-- Key teeth -->
+  <path d="M33 46 L42 46 L42 50 L37 50 L37 54 L33 54 Z" fill="url(#goldGrad)" stroke="#451a03" stroke-width="1.5" />
+  <!-- Sparkles -->
+  <polygon points="12,12 14,8 16,12 20,14 16,16 14,20 12,16 8,14" fill="#67e8f9" opacity="0.85" />
+  <polygon points="50,26 51.5,23 53,26 56,27.5 53,29 51.5,32 50,29 47,27.5" fill="#f472b6" opacity="0.85" />
+</svg>
